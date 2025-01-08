@@ -25,3 +25,11 @@ Route::put('/products/{product}', function(Product $product) {
     $product->save();
 
 })->name('product.update');
+
+Route::delete('/products/{product}', function(Product $product) {
+    $product->forceDelete();
+})->name('product.destroy');
+
+Route::delete('/products/{product}/soft-delete', function(Product $product) {
+    $product->delete();
+})->name('product.soft-delete');

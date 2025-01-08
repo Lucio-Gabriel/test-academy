@@ -3,6 +3,9 @@
 use App\Models\Product;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
+use function Pest\Laravel\assertSoftDeleted;
+use function Pest\Laravel\deleteJson;
 use function Pest\Laravel\postJson;
 use function Pest\Laravel\putJson;
 use function PHPUnit\Framework\assertSame;
@@ -51,4 +54,26 @@ it('should be able to update a product', function () {
 
 it('should be able to delete a product', function () {
 
-})->todo();
+    $product = Product::factory()->create();
+
+    deleteJson(route('product.destroy', $product));
+
+    assertDatabaseMissing('products', [
+        'id' => $product->id
+    ]);
+
+    assertDatabaseCount('products', 0);
+});
+
+it('should be able to soft delete a product', function () {
+
+    $product = Product::factory()->create();
+
+    deleteJson(route('product.soft-delete', $product));
+
+    assertSoftDeleted('products', [
+        'id' => $product->id
+    ]);
+
+    assertDatabaseCount('products', 1);
+});
