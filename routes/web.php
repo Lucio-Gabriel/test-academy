@@ -43,5 +43,5 @@ Route::delete('/products/{product}/soft-delete', function(Product $product) {
 })->name('product.soft-delete');
 
 Route::post('/sending-email/{user}', function (User $user) {
-    Mail::to($user)->send(new WelcomeEmail());
+    Mail::to($user)->send(new WelcomeEmail($user));
 })->name('sending-email');

@@ -26,3 +26,21 @@ test('an email was sent to user:x', function () {
         return $email->hasTo($user->email);
     });
 });
+
+test('email subject should contain the user name', function () {
+    $user = User::factory()->create();
+
+    $mail = new WelcomeEmail($user);
+
+    expect($mail)
+        ->assertHasSubject('Thank you' . $user->name);
+});
+
+test('email content should contain user email with a text', function () {
+    $user = User::factory()->create();
+
+    $mail = new WelcomeEmail($user);
+
+    expect($mail)
+        ->assertSeeInHtml('Confirmando que o seu email eh: '. $user->email);
+});
