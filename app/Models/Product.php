@@ -16,6 +16,7 @@ class Product extends Model
     protected $fillable = [
         'title',
         'code',
+        'owner_id',
     ];
 
     protected $casts = [
