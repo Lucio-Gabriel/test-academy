@@ -24,7 +24,14 @@ Route::post('/products', function () {
     ]);
 
     Product::query()
-        ->create(request()->only('title'));
+        ->create([
+            'title' => request()->only('title'),
+            'owner_id' => auth()->id()
+        ]);
+
+    auth()->user()->notify(
+        new \App\Notifications\NewProductionNotification()
+    );
 
     return response()->json('', '201');
 })->name('product.store');
