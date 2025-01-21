@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Product;
+use App\Models\User;
+use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
@@ -12,6 +14,9 @@ use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertTrue;
 
 it('should be able o create a product', function () {
+    $user = User::factory()->create();
+
+    actingAs($user);
 
     postJson(
         route('product.store'),
