@@ -1,11 +1,13 @@
 <?php
 
+use App\Actions\CreateProductAction;
 use App\Jobs\ImportProductsJob;
 use App\Mail\WelcomeEmail;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use function App\Actions\CreateProductActio;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,14 +25,10 @@ Route::post('/products', function () {
         'title' => 'required|max:255'
     ]);
 
-    Product::query()
-        ->create([
-            'title' => request()->only('title'),
-            'owner_id' => auth()->id()
-        ]);
-
-    auth()->user()->notify(
-        new \App\Notifications\NewProductionNotification()
+    $action = app(CreateProductAction::class);
+    $action->handle(
+        request()->get('title'),
+        auth()->user()
     );
 
     return response()->json('', '201');
