@@ -14,7 +14,7 @@ class CreateProductAction
         Product::query()
             ->create([
                 'title' => $title,
-                'owner_id' => $user->id()
+                'owner_id' => $user->id
             ]);
 
         $user->notify(

@@ -28,7 +28,7 @@ Route::post('/products', function () {
     $action = app(CreateProductAction::class);
     $action->handle(
         request()->get('title'),
-        auth()->user()
+        auth()->user(),
     );
 
     return response()->json('', '201');
