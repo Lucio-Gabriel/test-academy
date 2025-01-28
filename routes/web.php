@@ -57,3 +57,7 @@ Route::post('/import-products', function () {
 Route::post('/sending-email/{user}', function (User $user) {
     Mail::to($user)->send(new WelcomeEmail($user));
 })->name('sending-email');
+
+Route::get('/secure-route', fn() =>  ['oi'])
+    ->middleware(\App\Http\Middleware\AdminMiddleware::class)
+    ->name('secure-route');
