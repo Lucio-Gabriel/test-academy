@@ -61,3 +61,12 @@ Route::post('/sending-email/{user}', function (User $user) {
 Route::get('/secure-route', fn() =>  ['oi'])
     ->middleware(\App\Http\Middleware\AdminMiddleware::class)
     ->name('secure-route');
+
+Route::post('/upload-avatar', function () {
+    $file = request()->file('file');
+
+    $file->store(
+        '/',
+        options: ['disk' => 'avatar']
+    );
+})->name('upload-avatar');
