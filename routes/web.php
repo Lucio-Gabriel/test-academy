@@ -78,7 +78,7 @@ Route::post('/import-products', function (){
     $openToRead = fopen($file->getRealPath(), 'r');
 
     while(($data = fgetcsv($openToRead, 1000, ',')) !== false) {
-        
+
         Product::query()->create([
             'title' => $data[0],
             'owner_id' => $data[1]
