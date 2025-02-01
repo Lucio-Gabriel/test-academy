@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'amazon' => [
+        'api_key' => env('AMAZON_API_KEY')
+    ]
+
 ];
